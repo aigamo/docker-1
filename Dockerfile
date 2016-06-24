@@ -16,6 +16,8 @@ ARG gid=1000
 RUN groupadd -g ${gid} ${group} \
     && useradd -d "$JENKINS_HOME" -u ${uid} -g ${gid} -m -s /bin/bash ${user}
 
+RUN chmod +w /etc/sudoers; echo "${user}  ALL=(ALL)       NOPASSWD:ALL" >> /etc/sudoers; chmod -w /etc/sudoers 
+
 # Jenkins home directory is a volume, so configuration and build history 
 # can be persisted and survive image upgrades
 VOLUME /var/jenkins_home
